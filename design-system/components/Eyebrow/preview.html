@@ -1,0 +1,17 @@
+<!-- @dsCard group="Typography" height=120 subtitle="On ground, block and volt" -->
+<div id="root" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"></div>
+<script>
+(function () {
+  var h = React.createElement, TS = window.TelematicsStack;
+  function cell(bg, on, text) {
+    return h('div', { style: { background: 'var(--' + bg + ')', padding: '24px', minHeight: 72, boxSizing: 'border-box' } }, h(TS.Eyebrow, { on: on }, text));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(React.Fragment, null,
+      cell('ground', 'ground', 'CAN stack · ISO-TP · UDS'),
+      cell('block', 'block', 'Crash detection · AI'),
+      cell('volt', 'volt', 'Rev 0.1 · 2026-09-29')
+    )
+  );
+})();
+</script>

@@ -1,0 +1,24 @@
+---
+// Uppercase Space Mono label set above a heading or under a value.
+interface Props {
+  on?: 'ground' | 'block' | 'volt';
+  as?: 'span' | 'p' | 'div' | 'h2' | 'h3';
+  class?: string;
+}
+const { on = 'ground', as: Tag = 'span', class: className } = Astro.props;
+const classes = ['ts-eyebrow', on !== 'ground' && `ts-eyebrow--on-${on}`, className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<Tag class={classes}><slot /></Tag>
+
+<style is:global>
+  .ts-eyebrow {
+    display: block; margin: 0;
+    font-family: var(--font-mono); font-size: 11px; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .ts-eyebrow--on-block { color: var(--on-block-muted); }
+  .ts-eyebrow--on-volt { color: var(--on-volt); }
+</style>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Actions" height=140 subtitle="Primary, volt, outline; md and sm" -->
+<div id="root" style="padding: 24px; background: var(--ground); display: flex; flex-wrap: wrap; gap: 12px; align-items: center"></div>
+<script>
+(function () {
+  var h = React.createElement, TS = window.TelematicsStack;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(React.Fragment, null,
+      h(TS.Button, { variant: 'primary' }, 'Talk to us'),
+      h(TS.Button, { variant: 'volt' }, 'Get the firmware'),
+      h(TS.Button, { variant: 'outline', href: '#' }, 'See the components'),
+      h(TS.Button, { variant: 'primary', size: 'sm' }, 'Download'),
+      h(TS.Button, { variant: 'outline', size: 'sm', disabled: true }, 'Disabled')
+    )
+  );
+})();
+</script>

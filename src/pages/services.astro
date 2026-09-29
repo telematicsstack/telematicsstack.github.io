@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Section from '../components/Section.astro';
+---
+
+<Base
+  title="How we support you — Telematics Stack"
+  description="The firmware is the product. Around it, Telematics Stack helps you ship: compliance guidance for GDPR and the EU Cyber Resilience Act, support as you build your backend and end-customer use cases, and support on every engagement."
+>
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container">
+      <Eyebrow as="p">How we support you</Eyebrow>
+      <h1 class="display-l intro__title">
+        We stay until<br />
+        you <span class="highlight">ship.</span>
+      </h1>
+      <p class="body-l intro__lede">
+        The firmware is the product. These are the things we do around it so your
+        device reaches customers — and keeps working once it does.
+      </p>
+    </div>
+  </section>
+
+  <!-- Enablement -->
+  <Section eyebrow="Around the firmware" title="What we help with">
+    <div class="card-grid">
+      <FeatureCard title="Compliance guidance" spec="GDPR · EU Cyber Resilience Act (CRA) · regional privacy law">
+        Connected vehicles collect personal data and ship software into regulated
+        markets. We guide you through GDPR, the EU Cyber Resilience Act and privacy
+        legislation in the regions and markets you sell into.
+      </FeatureCard>
+      <FeatureCard title="The full product" spec="Backend · frontend · end-customer use cases">
+        A device is one part of a telematics product. You build the rest — the backend,
+        the frontend, the use cases your end customers pay for — and we support you
+        with the experience of having shipped it before.
+      </FeatureCard>
+    </div>
+  </Section>
+
+  <!-- Engagement models -->
+  <Section tone="block" eyebrow="Engagement models" title="Components or the full package">
+    <div class="models">
+      <div class="models__panel">
+        <h3 class="heading">Individual components</h3>
+        <p class="body models__copy">
+          Take the parts you are missing — CAN, safety events, crash detection, GNSS
+          filtering — and keep the rest of your firmware.
+        </p>
+      </div>
+      <div class="models__panel">
+        <h3 class="heading">Full package</h3>
+        <p class="body models__copy">
+          The complete firmware platform on your device, from modem to CAN, ready for
+          your product on top.
+        </p>
+      </div>
+    </div>
+    <p class="mono-body models__note">Both include support · bug fixes · security fixes</p>
+  </Section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta__inner">
+      <h2 class="display-m">Tell us what you are building</h2>
+      <p class="body-l cta__copy">
+        We will tell you which parts we can take off your plate.
+      </p>
+      <Button href="mailto:contact@telematicsstack.com?subject=Services">Contact us</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-block: var(--space-9) var(--space-6); }
+  .intro__title { margin-top: var(--space-4); }
+  .intro__lede { margin-top: var(--space-6); max-width: 52ch; color: var(--ink-muted); }
+
+  .models { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .models__panel {
+    padding: var(--space-6);
+    border: var(--border-strong) solid var(--on-block-muted);
+    display: flex; flex-direction: column; gap: var(--space-3);
+  }
+  .models__copy { color: var(--on-block-muted); max-width: 48ch; }
+  .models__note { margin-top: var(--space-5); color: var(--on-block); }
+  @media (max-width: 800px) {
+    .models { grid-template-columns: 1fr; }
+  }
+
+  .cta { padding-block: var(--space-9) 0; }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .cta__copy { max-width: 52ch; color: var(--ink-muted); }
+</style>

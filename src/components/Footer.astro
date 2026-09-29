@@ -1,0 +1,55 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-block">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="/logos/lockup-horizontal-reversed.svg" alt="Telematics Stack" height="32" />
+      <p class="site-footer__tagline">Production-hardened telematics firmware and components.</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="/technology/">Technology</a>
+      <a href="/partners/">Partners</a>
+      <a href="/services/">Services</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="site-footer__contact">
+      <a href="mailto:contact@telematicsstack.com" class="site-footer__email">contact@telematicsstack.com</a>
+      <p class="site-footer__legal">© {year} Telematics Stack</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--block);
+    color: var(--on-block);
+    margin-top: var(--space-9);
+  }
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+  .site-footer__brand img { height: 32px; width: auto; }
+  .site-footer__tagline {
+    margin-top: var(--space-4);
+    font-family: var(--font-sans); font-size: 14px; line-height: 1.5;
+    color: var(--on-block-muted);
+    max-width: 32ch;
+  }
+  .site-footer__nav { display: flex; flex-direction: column; gap: var(--space-3); }
+  .site-footer__nav a {
+    font-family: var(--font-sans); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--on-block); text-decoration: none;
+  }
+  .site-footer__nav a:hover { text-decoration: underline; }
+  .site-footer__email { font-family: var(--font-mono); font-size: 14px; line-height: 1.6; color: var(--on-block); }
+  .site-footer__legal { margin-top: var(--space-4); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--on-block-muted); }
+  :global(.site-footer :focus-visible) { outline-color: var(--on-block); }
+  @media (max-width: 800px) {
+    .site-footer__inner { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+</style>

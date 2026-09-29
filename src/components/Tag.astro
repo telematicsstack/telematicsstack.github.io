@@ -1,0 +1,22 @@
+---
+// Mono status tag, e.g. "IN DEVELOPMENT". Ink-muted outline — volt is never type or a line.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class={['ts-tag', className].filter(Boolean).join(' ')}><slot /></span>
+
+<style is:global>
+  .ts-tag {
+    display: inline-block;
+    padding: 2px var(--space-2);
+    border: 1px solid var(--ink-muted);
+    font-family: var(--font-mono); font-size: 11px; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-muted);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .ts-card--block .ts-tag, .on-block .ts-tag { border-color: var(--on-block-muted); color: var(--on-block-muted); }
+</style>

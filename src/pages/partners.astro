@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import StatBlock from '../components/StatBlock.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Section from '../components/Section.astro';
+---
+
+<Base
+  title="Partners — Telematics Stack"
+  description="For hardware manufacturers: refer your customers to Telematics Stack and they get proven, supported firmware on your device from day one. They reach market faster; you sell more devices sooner."
+>
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container">
+      <Eyebrow as="p">For hardware manufacturers</Eyebrow>
+      <h1 class="display-l intro__title">
+        Sell more devices,<br />
+        <span class="highlight">sooner.</span>
+      </h1>
+      <p class="body-l intro__lede">
+        Your customers buy your hardware when their product ships. Refer them to
+        Telematics Stack and they get proven, supported firmware on your device from
+        day one — they reach market faster, and your volumes start earlier.
+      </p>
+      <div class="intro__actions">
+        <Button href="mailto:contact@telematicsstack.com?subject=Partnership">Partner with us</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- The argument -->
+  <section class="stats">
+    <div class="container">
+      <div class="stat-grid">
+        <StatBlock value="Day 1" label="supported firmware on your device" tone="block" />
+        <StatBlock value="Months" label="to market, not years" />
+        <StatBlock value="MCU+" label="small MCUs and embedded Linux" />
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <Section eyebrow="The collaboration" title="What working together looks like">
+    <div class="card-grid">
+      <FeatureCard eyebrow="We do" title="Bring the firmware up on your hardware" spec="Board bring-up · CAN · modem · IMU · GNSS">
+        We port and test the stack on your device, so it runs before your customer
+        writes a line of application code.
+      </FeatureCard>
+      <FeatureCard eyebrow="Your customers get" title="A supported platform" spec="Support · bug fixes · security fixes">
+        Production-hardened firmware with support behind it, instead of a reference
+        design they have to finish themselves.
+      </FeatureCard>
+      <FeatureCard eyebrow="You get" title="A differentiated offering" spec="Hardware + ready firmware · shorter sales cycle">
+        Your device ships with a proven firmware path. That sets it apart from hardware
+        that arrives as a bare board.
+      </FeatureCard>
+    </div>
+  </Section>
+
+  <!-- Hardware-agnostic -->
+  <Section tone="block" eyebrow="Hardware-agnostic" title="Built to run on your device">
+    <div class="agnostic">
+      <p class="body-l agnostic__copy">
+        The firmware is not tied to one chip or one vendor. It runs on small MCUs and on
+        embedded Linux, and builds with an open-source toolchain on Windows, macOS and
+        Linux — no proprietary compiler lock-in for you or your customers.
+      </p>
+      <p class="mono-body agnostic__spec">
+        CAN stack &lt;30 KB flash · from 1 KB RAM · no heap, threads or timers
+      </p>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta__inner">
+      <h2 class="display-m">Put proven firmware on your hardware</h2>
+      <p class="body-l cta__copy">
+        Tell us about your device and your customers. We will show you what a
+        partnership looks like.
+      </p>
+      <Button href="mailto:contact@telematicsstack.com?subject=Partnership">Partner with us</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-block: var(--space-9) var(--space-8); }
+  .intro__title { margin-top: var(--space-4); }
+  .intro__lede { margin-top: var(--space-6); max-width: 58ch; color: var(--ink-muted); }
+  .intro__actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+  .stats { padding-block: 0 var(--space-6); }
+
+  .agnostic { display: flex; flex-direction: column; gap: var(--space-5); }
+  .agnostic__copy { max-width: 64ch; color: var(--on-block-muted); }
+  .agnostic__spec { color: var(--on-block); padding-top: var(--space-4); border-top: 1px solid var(--on-block-muted); max-width: 64ch; }
+
+  .cta { padding-block: var(--space-9) 0; }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .cta__copy { max-width: 52ch; color: var(--ink-muted); }
+</style>

@@ -1,0 +1,31 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+// A page section: eyebrow + display heading + content, generous space around the group.
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  tone?: 'ground' | 'block';
+  id?: string;
+  class?: string;
+}
+const { eyebrow, title, tone = 'ground', id, class: className } = Astro.props;
+---
+
+<section id={id} class={['section', tone === 'block' && 'section--block on-block', className].filter(Boolean).join(' ')}>
+  <div class="container">
+    {eyebrow && <Eyebrow as="p" on={tone}>{eyebrow}</Eyebrow>}
+    {title && <h2 class="display-m section__title">{title}</h2>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section { padding-block: var(--space-9); }
+  .section--block { background: var(--block); color: var(--on-block); }
+  .section__title { margin-top: var(--space-3); margin-bottom: var(--space-6); max-width: 20ch; }
+  :global(.section--block :focus-visible) { outline-color: var(--on-block); }
+  @media (max-width: 700px) {
+    .section { padding-block: var(--space-8); }
+  }
+</style>

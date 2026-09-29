@@ -1,0 +1,39 @@
+---
+// Square, bordered, uppercase button. Ported from design-system/components (ts-btn).
+// Primary (black) is the default; use volt once per view at most.
+interface Props {
+  variant?: 'primary' | 'volt' | 'outline';
+  size?: 'md' | 'sm';
+  href?: string;
+  class?: string;
+}
+const { variant = 'primary', size = 'md', href, class: className } = Astro.props;
+const classes = ['ts-btn', `ts-btn--${variant}`, size === 'sm' && 'ts-btn--sm', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{href ? (
+  <a class={classes} href={href}><slot /></a>
+) : (
+  <button class={classes} type="button"><slot /></button>
+)}
+
+<style is:global>
+  .ts-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    box-sizing: border-box; min-height: 48px; padding: 0 var(--space-5);
+    font-family: var(--font-sans); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1;
+    border: 2px solid var(--line-strong); border-radius: var(--radius-none);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background-color 120ms linear, color 120ms linear;
+  }
+  .ts-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .ts-btn--primary { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .ts-btn--primary:hover { background: var(--ink-muted); border-color: var(--ink-muted); }
+  .ts-btn--volt { background: var(--volt); color: var(--on-volt); border-color: var(--volt); }
+  .ts-btn--volt:hover { border-color: var(--ink); }
+  .ts-btn--outline { background: transparent; color: var(--ink); }
+  .ts-btn--outline:hover { background: var(--surface); }
+  .ts-btn--sm { min-height: 40px; padding: 0 var(--space-4); font-size: 13px; }
+</style>

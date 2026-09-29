@@ -1,0 +1,33 @@
+<!-- @dsCard height=300 -->
+<style>
+  .cover { position: relative; width: 960px; height: 300px; background: var(--ground); overflow: hidden; }
+  .cover svg { position: absolute; inset: 0; width: 960px; height: 300px; }
+  .cover .name { position: absolute; left: 48px; bottom: 56px; margin: 0; font-family: var(--font-display); font-size: 64px; line-height: 0.95; letter-spacing: -0.045em; text-transform: uppercase; color: var(--ink); max-width: 440px; }
+  .cover .tag { position: absolute; left: 48px; bottom: 28px; margin: 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.4; color: var(--ink-muted); max-width: 440px; }
+  .volt { fill: var(--volt); }
+  .ink { fill: var(--ink); }
+  .ground { fill: var(--ground); }
+</style>
+<div class="cover">
+  <!--
+    blocks: volt 464×64, ink 352×64, ink 240×64 (heights space-8, gap space-2), plus ink 64×64 satellite
+    arrangement: the mark's staggered stack, flush left at x=480, longest on top, top bar volt
+    pattern: stripes — "loud, bold, poster type"; ground stripes cut into the middle bar at space-5 pitch, space-2 wide
+    scales: space-8 64, space-5 24, space-2 8, radius-none
+  -->
+  <svg viewBox="0 0 960 300" aria-hidden="true">
+    <rect class="volt" x="480" y="32" width="464" height="64"/>
+    <rect class="ink" x="480" y="104" width="352" height="64"/>
+    <rect class="ink" x="480" y="176" width="240" height="64"/>
+    <rect class="ink" x="880" y="176" width="64" height="64"/>
+    <rect class="ground" x="656" y="104" width="8" height="64"/>
+    <rect class="ground" x="680" y="104" width="8" height="64"/>
+    <rect class="ground" x="704" y="104" width="8" height="64"/>
+    <rect class="ground" x="728" y="104" width="8" height="64"/>
+    <rect class="ground" x="752" y="104" width="8" height="64"/>
+    <rect class="ground" x="776" y="104" width="8" height="64"/>
+    <rect class="ground" x="800" y="104" width="8" height="64"/>
+  </svg>
+  <h1 class="name">Telematics<br>Stack</h1>
+  <p class="tag">Production-hardened firmware. Ship in months, not years.</p>
+</div>

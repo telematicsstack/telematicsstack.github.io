@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import StatBlock from '../components/StatBlock.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Section from '../components/Section.astro';
+import Tag from '../components/Tag.astro';
+---
+
+<Base
+  title="Technology — Telematics Stack"
+  description="Inside the Telematics Stack firmware: a production-hardened platform, a CAN stack in under 30 KB of flash and 1 KB of RAM, IMU calibration, AI crash detection and IMU-filtered GNSS."
+>
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container">
+      <Eyebrow as="p">Technology</Eyebrow>
+      <h1 class="display-l intro__title">
+        Firmware that is<br />
+        already <span class="highlight">hardened.</span>
+      </h1>
+      <p class="body-l intro__lede">
+        The core components run in production today, with years of field hardening,
+        component-level testing and crash-dump tooling under each one. Take the
+        full platform or only the parts you are missing — they run on small MCUs and
+        embedded Linux alike.
+      </p>
+    </div>
+  </section>
+
+  <!-- Firmware platform -->
+  <Section id="platform" eyebrow="01 — Firmware platform" title="A stable base with fast release cycles">
+    <div class="cap">
+      <div class="cap__copy">
+        <p class="body-l">
+          Modem connectivity, firmware updates and debug logging are the parts every
+          device needs and every team underestimates. Ours have years of production
+          hardening behind them.
+        </p>
+        <p class="body cap__muted">
+          Heavy component-level testing catches regressions before they reach a
+          device. When something does go wrong in the field, detailed crash dumps and
+          trace logs come back remotely, so you debug from the desk, not the vehicle.
+        </p>
+      </div>
+      <dl class="specs">
+        <div class="specs__row"><dt class="eyebrow">Hardening</dt><dd class="mono-body">Years in production · component-level tests</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Remote debug</dt><dd class="mono-body">Crash dumps · debug &amp; trace logging</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Connectivity</dt><dd class="mono-body">Optimised, faster modem connectivity</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Updates</dt><dd class="mono-body">Optimised, faster firmware updates</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Toolchain</dt><dd class="mono-body">Open source · Windows, macOS, Linux · no proprietary compiler</dd></div>
+      </dl>
+    </div>
+  </Section>
+
+  <!-- CAN stack -->
+  <Section id="can" tone="block" eyebrow="02 — CAN stack" title="Reads most vehicles, fits almost anywhere">
+    <div class="stat-grid can-stats">
+      <StatBlock value="<30 KB" label="flash for the full stack" tone="volt" />
+      <StatBlock value="1 KB" label="RAM minimum" />
+      <StatBlock value="0" label="heap, threads or timers" />
+      <StatBlock value="2010+" label="most vehicles built after 2010" />
+    </div>
+    <div class="cap">
+      <div class="cap__copy">
+        <p class="body-l">
+          The CAN stack covers most vehicles built after 2010 with ISO-TP diagnostics,
+          raw frames and broadcast traffic.
+        </p>
+        <p class="body cap__muted">
+          It needs no heap, no threads and no timers, so it drops into a small MCU
+          without reshaping your firmware — and runs just as well on embedded Linux.
+        </p>
+      </div>
+      <dl class="specs">
+        <div class="specs__row"><dt class="eyebrow">Protocols</dt><dd class="mono-body">ISO-TP (UDS/KWP2000) · raw · broadcast</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Targets</dt><dd class="mono-body">Small MCUs · embedded Linux</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Next</dt><dd class="mono-body specs__dev">VW TP2 <Tag>In development</Tag></dd></div>
+        <div class="specs__row"><dt class="eyebrow">Next</dt><dd class="mono-body specs__dev">CAN scan <Tag>In development</Tag></dd></div>
+      </dl>
+    </div>
+  </Section>
+
+  <!-- CAN parameter library -->
+  <Section id="parameters" eyebrow="03 — CAN parameter library" title="The parameters, not just the protocol">
+    <div class="card-grid">
+      <FeatureCard title="Vast parameter collection" spec="Cars · light commercial vehicles · trucks">
+        A stack that speaks CAN is only useful if it knows what to ask for. The library
+        maps the parameters that matter across private cars, vans and trucks.
+      </FeatureCard>
+      <FeatureCard title="Kept current" spec="Data collaborations · new models added continuously">
+        Collaborations with leading diagnostics tool vendors keep the library up to date
+        as new vehicles reach the road.
+      </FeatureCard>
+      <FeatureCard title="Remote reverse engineering" spec="Remote scan · diagnostics · any vehicle">
+        <Tag>In development</Tag> When the CAN scan feature is production-ready, remote
+        reverse engineering and diagnostics support in-depth parameters for any vehicle.
+      </FeatureCard>
+    </div>
+  </Section>
+
+  <!-- IMU -->
+  <Section id="imu" eyebrow="04 — IMU" title="Calibration that holds, events you can trust">
+    <div class="card-grid">
+      <FeatureCard title="IMU calibration &amp; safety events" spec="Accelerometer + gyroscope + GNSS speed">
+        Calibration combines accelerometer, gyroscope and GNSS speed, and recalibrates
+        automatically to handle drift. It works across different IMUs, so harsh-driving
+        and safety events stay reliable when the hardware changes.
+      </FeatureCard>
+      <FeatureCard title="Trip start/stop without an ignition wire" spec="Live IMU streaming · no ignition wire">
+        <Tag>In development</Tag> Live IMU data detects when a trip starts and stops.
+        No ignition wire means easier installation and simpler cabling.
+      </FeatureCard>
+    </div>
+  </Section>
+
+  <!-- AI crash detection -->
+  <Section id="crash" eyebrow="05 — AI crash detection" title="Crash classification on par with market leaders">
+    <div class="cap">
+      <div class="cap__copy">
+        <p class="body-l">
+          The device detects a candidate crash; a trained AI model in the cloud decides
+          what it was.
+        </p>
+        <p class="body cap__muted">
+          The model is device-agnostic, so it also works on the devices you already have
+          in the field — no hardware change needed to add crash detection to an
+          existing fleet.
+        </p>
+      </div>
+      <ol class="flow">
+        <li class="flow__step">
+          <span class="eyebrow">Step 1 · device</span>
+          <span class="mono-body">Detects a candidate crash</span>
+        </li>
+        <li class="flow__step">
+          <span class="eyebrow">Step 2 · uplink</span>
+          <span class="mono-body">Sends the event to the cloud</span>
+        </li>
+        <li class="flow__step">
+          <span class="eyebrow">Step 3 · cloud</span>
+          <span class="mono-body">Trained model classifies it</span>
+        </li>
+      </ol>
+    </div>
+  </Section>
+
+  <!-- GNSS -->
+  <Section id="gnss" eyebrow="06 — GNSS filtering" title="Clean tracks from one generic filter">
+    <div class="cap">
+      <div class="cap__copy">
+        <p class="body-l">
+          GNSS outliers are removed by cross-checking every fix against IMU data.
+        </p>
+        <p class="body cap__muted">
+          One generic filter replaces a pile of per-corner-case workarounds, so there is
+          less code to write, test and maintain.
+        </p>
+      </div>
+      <dl class="specs">
+        <div class="specs__row"><dt class="eyebrow">Input</dt><dd class="mono-body">GNSS fixes + IMU data</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Method</dt><dd class="mono-body">Cross-check · reject outliers</dd></div>
+        <div class="specs__row"><dt class="eyebrow">Maintenance</dt><dd class="mono-body">1 filter · no per-case rules</dd></div>
+      </dl>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta__inner">
+      <h2 class="display-m">Go deeper with our engineers</h2>
+      <p class="body-l cta__copy">
+        Send us your target hardware and use case. We will walk your team through the
+        components that fit.
+      </p>
+      <Button href="mailto:contact@telematicsstack.com?subject=Technology">Talk to an engineer</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-block: var(--space-9) var(--space-8); }
+  .intro__title { margin-top: var(--space-4); }
+  .intro__lede { margin-top: var(--space-6); max-width: 60ch; color: var(--ink-muted); }
+
+  .can-stats { margin-bottom: var(--space-6); }
+
+  .cap { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-7); align-items: start; }
+  .cap__copy { display: flex; flex-direction: column; gap: var(--space-4); max-width: 52ch; }
+  .cap__muted { color: var(--ink-muted); }
+  :global(.on-block) .cap__muted { color: var(--on-block-muted); }
+
+  .specs { margin: 0; border: var(--border-strong) solid var(--line-strong); background: var(--surface); }
+  .specs__row {
+    display: grid; grid-template-columns: 16ch 1fr; gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    border-top: 1px solid var(--line-soft);
+  }
+  .specs__row:first-child { border-top: 0; }
+  .specs dt { color: var(--ink-muted); padding-top: 3px; }
+  .specs dd { margin: 0; }
+  .specs__dev { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  :global(.on-block) .specs { background: transparent; border-color: var(--on-block-muted); }
+  :global(.on-block) .specs__row { border-top-color: var(--on-block-muted); }
+  :global(.on-block) .specs__row:first-child { border-top: 0; }
+  :global(.on-block) .specs dt { color: var(--on-block-muted); }
+
+  .flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+  .flow__step {
+    display: flex; flex-direction: column; gap: var(--space-2);
+    padding: var(--space-5);
+    background: var(--surface);
+    border: var(--border-strong) solid var(--line-strong);
+  }
+  .flow__step .eyebrow { color: var(--ink-muted); }
+
+  @media (max-width: 900px) {
+    .cap { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+  @media (max-width: 700px) {
+    .flow { grid-template-columns: 1fr; }
+    .specs__row { grid-template-columns: 1fr; gap: var(--space-1); }
+  }
+
+  .cta { padding-block: var(--space-6) 0; }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .cta__copy { max-width: 52ch; color: var(--ink-muted); }
+</style>

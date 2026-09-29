@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import StatBlock from '../components/StatBlock.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Section from '../components/Section.astro';
+import Tag from '../components/Tag.astro';
+---
+
+<Base
+  title="Telematics Stack — Production-hardened telematics firmware"
+  description="Supported, tested telematics device firmware and components. Buy individual components or the full package — both with support, bug fixes and security fixes."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <Eyebrow as="p">Telematics device firmware &amp; components</Eyebrow>
+      <h1 class="display-xl hero__title">
+        Ship in<br />
+        <span class="highlight">months,</span><br />
+        not years.
+      </h1>
+      <p class="body-l hero__lede">
+        Telematics Stack is supported, production-hardened firmware for telematics
+        devices. Buy the components you need or the full package — both come with
+        support, bug fixes and security fixes, so your team ships product instead
+        of debugging a platform.
+      </p>
+      <div class="hero__actions">
+        <Button href="mailto:contact@telematicsstack.com">Talk to us</Button>
+        <Button href="/technology/" variant="outline">See the technology</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stat row -->
+  <section class="stats">
+    <div class="container">
+      <div class="stat-grid">
+        <StatBlock value="6" label="production components — take one or all" tone="volt" />
+        <StatBlock value="0" label="proprietary tools — open-source toolchain" tone="block" />
+        <StatBlock value="2010+" label="vehicles covered by the CAN library" />
+        <StatBlock value="MCU+" label="runs on small MCUs and embedded Linux" />
+      </div>
+    </div>
+  </section>
+
+  <!-- What you get -->
+  <Section eyebrow="The stack" title="Everything a telematics device needs to ship">
+    <div class="card-grid">
+      <FeatureCard
+        title="Hardened firmware platform"
+        spec="Open-source toolchain · builds on Windows, macOS, Linux"
+      >
+        Modem communication, firmware updates and debug logging that hold up in
+        the field. Years of production hardening, heavy component-level testing
+        and detailed crash-dump tooling mean a stable base and fast release cycles.
+      </FeatureCard>
+      <FeatureCard
+        title="CAN stack"
+        spec="ISO-TP (UDS/KWP2000) · raw &amp; broadcast · <30 KB flash · 1 KB RAM"
+      >
+        Reads most vehicles built after 2010. Built for small MCUs — no heap,
+        no threads, no timers — and just as happy on embedded Linux.
+      </FeatureCard>
+      <FeatureCard
+        title="CAN parameter library"
+        spec="Cars · light commercial vehicles · trucks"
+      >
+        A vast collection of CAN parameters, kept current for new vehicles through
+        collaborations with leading diagnostics tool vendors.
+      </FeatureCard>
+      <FeatureCard
+        title="Driving safety events"
+        spec="Accelerometer + gyroscope + GNSS speed"
+      >
+        Solid IMU calibration that automatically recalibrates to handle drift and
+        works across different IMUs, feeding reliable harsh-driving and safety events.
+      </FeatureCard>
+      <FeatureCard
+        title="AI crash detection"
+        spec="Device-agnostic · cloud classification"
+      >
+        A trained model that classifies crashes on par with market leaders. It is
+        device-agnostic, so it also works with the devices you already have in the field.
+      </FeatureCard>
+      <FeatureCard
+        title="Clean GNSS tracks"
+        spec="GNSS + IMU cross-checking"
+      >
+        GNSS outliers are removed by cross-checking against IMU data — one generic
+        filter instead of a pile of per-case workarounds.
+      </FeatureCard>
+    </div>
+    <p class="in-dev-note mono-body">
+      <Tag>In development</Tag>
+      IMU-based trip start/stop without an ignition wire · VW TP2 · remote CAN scan &amp; diagnostics
+    </p>
+  </Section>
+
+  <!-- Audience split -->
+  <Section eyebrow="Who it's for" title="Two ways to work with us">
+    <div class="audience-grid">
+      <div class="audience-panel">
+        <h3 class="heading">Hardware manufacturers</h3>
+        <p class="body">
+          Your customers buy hardware when their product ships. Refer them to
+          Telematics Stack and they get proven firmware on your device from day
+          one — faster time to market for them, more devices sold for you.
+        </p>
+        <Button href="/partners/" variant="outline">Partner with us</Button>
+      </div>
+      <div class="audience-panel">
+        <h3 class="heading">Device vendors &amp; solution providers</h3>
+        <p class="body">
+          Already have a device? Take the components you're missing — CAN, safety
+          events, crash detection, GNSS filtering — or the full firmware package,
+          and stop maintaining the plumbing yourself.
+        </p>
+        <Button href="/technology/" variant="outline">Explore the components</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Services strip (supporting, secondary) -->
+  <Section tone="block" eyebrow="And everything around it" title="We stay until you ship">
+    <div class="services-strip">
+      <p class="body-l services-strip__copy">
+        The firmware is the product. Around it we do what it takes for you to
+        succeed: guidance through compliance like GDPR and the EU Cyber Resilience
+        Act, support while you build your backend and end-customer use cases, and
+        bug and security fixes on every engagement.
+      </p>
+      <Button href="/services/" variant="outline" class="on-block-button">How we support you</Button>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <section class="cta">
+    <div class="container cta__inner">
+      <h2 class="display-l">Get to market <span class="highlight">faster.</span></h2>
+      <p class="body-l cta__copy">Tell us about your device or your product, and we'll tell you what we can take off your plate.</p>
+      <Button href="mailto:contact@telematicsstack.com">Contact us</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: var(--space-9) var(--space-8); }
+  .hero__title { margin-top: var(--space-4); }
+  .hero__lede { margin-top: var(--space-6); max-width: 56ch; color: var(--ink-muted); }
+  .hero__actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+  .stats { padding-block: 0 var(--space-8); }
+
+  .in-dev-note { margin-top: var(--space-5); color: var(--ink-muted); display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+
+  .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .audience-panel {
+    background: var(--surface);
+    border: var(--border-strong) solid var(--line-strong);
+    padding: var(--space-6);
+    display: flex; flex-direction: column; gap: var(--space-4); align-items: flex-start;
+  }
+  .audience-panel .body { color: var(--ink-muted); }
+  @media (max-width: 800px) {
+    .audience-grid { grid-template-columns: 1fr; }
+  }
+
+  .services-strip { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; }
+  .services-strip__copy { max-width: 64ch; color: var(--on-block-muted); }
+  :global(.on-block-button) { color: var(--on-block) !important; border-color: var(--on-block) !important; }
+  :global(.on-block-button:hover) { background: var(--ink-muted) !important; }
+
+  .cta { padding-block: var(--space-9) 0; }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .cta__copy { max-width: 52ch; color: var(--ink-muted); }
+</style>

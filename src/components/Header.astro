@@ -1,0 +1,52 @@
+---
+import Button from './Button.astro';
+
+const nav = [
+  { href: '/technology/', label: 'Technology' },
+  { href: '/partners/', label: 'Partners' },
+  { href: '/services/', label: 'Services' },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__logo" aria-label="Telematics Stack — home">
+      <img src="/logos/lockup-horizontal.svg" alt="Telematics Stack" height="32" />
+    </a>
+    <nav class="site-header__nav" aria-label="Main">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class="site-header__link"
+          aria-current={current.startsWith(item.href) ? 'page' : undefined}
+        >{item.label}</a>
+      ))}
+      <Button href="/contact/" size="sm">Contact</Button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--ground);
+    border-bottom: var(--border-strong) solid var(--line-strong);
+  }
+  .site-header__inner {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+    min-height: 80px;
+  }
+  .site-header__logo img { height: 32px; width: auto; }
+  .site-header__nav { display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap; }
+  .site-header__link {
+    font-family: var(--font-sans); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink);
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+  }
+  .site-header__link:hover, .site-header__link[aria-current='page'] { border-bottom-color: var(--ink); }
+  @media (max-width: 700px) {
+    .site-header__inner { flex-direction: column; align-items: flex-start; padding-block: var(--space-4); }
+    .site-header__nav { gap: var(--space-4); }
+  }
+</style>

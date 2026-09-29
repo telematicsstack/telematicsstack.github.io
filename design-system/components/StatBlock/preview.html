@@ -1,0 +1,15 @@
+<!-- @dsCard group="Data" height=140 subtitle="Volt, block and outline tones in a 4-up grid" -->
+<div id="root" style="padding: 16px; background: var(--ground)"></div>
+<script>
+(function () {
+  var h = React.createElement, TS = window.TelematicsStack;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' } },
+      h(TS.StatBlock, { value: '0', label: 'crashes in production', tone: 'volt' }),
+      h(TS.StatBlock, { value: '1 KB', label: 'RAM for the CAN stack', tone: 'block' }),
+      h(TS.StatBlock, { value: '2010+', label: 'vehicles covered', tone: 'outline' }),
+      h(TS.StatBlock, { value: 'No wire', label: 'IMU ignition detection', tone: 'outline' })
+    )
+  );
+})();
+</script>

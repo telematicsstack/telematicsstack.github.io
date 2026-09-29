@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+---
+
+<Base
+  title="Contact — Telematics Stack"
+  description="Contact Telematics Stack about telematics firmware, individual components or a hardware partnership. Email contact@telematicsstack.com."
+>
+  <section class="contact">
+    <div class="container">
+      <Eyebrow as="p">Contact</Eyebrow>
+      <h1 class="display-l contact__title">
+        Let's <span class="highlight">talk.</span>
+      </h1>
+      <p class="body-l contact__lede">
+        Tell us about your device, your product or your hardware. Engineers read
+        every message, so include the details.
+      </p>
+      <div class="contact__actions">
+        <Button href="mailto:contact@telematicsstack.com?subject=General%20enquiry">General enquiry</Button>
+        <Button href="mailto:contact@telematicsstack.com?subject=Partnership" variant="outline">Partnerships</Button>
+      </div>
+      <p class="mono-body contact__address">contact@telematicsstack.com</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { padding-block: var(--space-9); }
+  .contact__title { margin-top: var(--space-4); }
+  .contact__lede { margin-top: var(--space-6); max-width: 52ch; color: var(--ink-muted); }
+  .contact__actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .contact__address { margin-top: var(--space-5); color: var(--ink-muted); }
+</style>
