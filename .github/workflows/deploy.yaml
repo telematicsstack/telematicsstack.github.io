@@ -13,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
       - name: Build site with docker
         run: |
           docker build --progress=plain --no-cache --output type=tar,dest=${{ runner.temp }}/artifact.tar .
       - name: Upload Github Pages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: github-pages
           path: ${{ runner.temp }}/artifact.tar
@@ -38,4 +38,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
