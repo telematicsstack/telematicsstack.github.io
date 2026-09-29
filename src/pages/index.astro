@@ -123,6 +123,18 @@ import Tag from '../components/Tag.astro';
     </div>
   </Section>
 
+  <!-- About teaser -->
+  <Section eyebrow="About us" title="We've shipped this before">
+    <div class="about-teaser">
+      <p class="body-l about-teaser__copy">
+        Telematics Stack is founded on the lessons of building a connected-vehicle
+        company from the ground up and shipping 800,000+ devices — including the
+        hardware nobody would sell us in parts.
+      </p>
+      <Button href="/about/" variant="outline">Who we are</Button>
+    </div>
+  </Section>
+
   <!-- Services strip (supporting, secondary) -->
   <Section tone="block" eyebrow="And everything around it" title="We stay until you ship">
     <div class="services-strip">
@@ -167,6 +179,9 @@ import Tag from '../components/Tag.astro';
   @media (max-width: 800px) {
     .audience-grid { grid-template-columns: 1fr; }
   }
+
+  .about-teaser { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; }
+  .about-teaser__copy { max-width: 64ch; color: var(--ink-muted); }
 
   .services-strip { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; }
   .services-strip__copy { max-width: 64ch; color: var(--on-block-muted); }

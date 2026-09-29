@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import StatBlock from '../components/StatBlock.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Section from '../components/Section.astro';
+---
+
+<Base
+  title="About us — Telematics Stack"
+  description="Telematics Stack is founded by people who built a connected-vehicle company from the ground up and shipped 800,000+ devices. We prebuild the components we had to build ourselves, so the next telematics company doesn't start from zero."
+>
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container">
+      <Eyebrow as="p">About us</Eyebrow>
+      <h1 class="display-l intro__title">
+        We've <span class="highlight">shipped</span><br />
+        this before.
+      </h1>
+      <p class="body-l intro__lede">
+        Telematics Stack is founded by people who have taken a connected-vehicle
+        product from proof of concept to global scale — and know exactly which
+        parts slow you down.
+      </p>
+    </div>
+  </section>
+
+  <!-- Track record -->
+  <section class="stats">
+    <div class="container">
+      <div class="stat-grid">
+        <StatBlock value="800K+" label="devices shipped to customers" tone="volt" />
+        <StatBlock value="3" label="regions — EMEA, APAC, LATAM" tone="block" />
+        <StatBlock value="1M+" label="devices since contracted with a major OEM" />
+      </div>
+    </div>
+  </section>
+
+  <!-- The story -->
+  <Section eyebrow="Track record" title="Built from the ground up, shipped at scale">
+    <div class="story">
+      <p class="body-l">
+        Our founder was CTO of a mid-sized auto-tech company and built an
+        industry-leading connected-vehicle solution from the ground up: the device,
+        its firmware, the backend, the apps and the fleet management around them.
+      </p>
+      <p class="body story__muted">
+        The solution scaled to global deployment across EMEA, APAC and LATAM, with
+        over 800,000 devices shipped and terabytes of vehicle data ingested every
+        month. That meant vendor contracts, compliance processes, global
+        homologation and security approvals for some of the industry's largest
+        customers. The company has since signed a contract with a major vehicle
+        manufacturer to ship millions more devices.
+      </p>
+      <p class="body story__muted">
+        Building their own hardware was never the goal. It happened because no
+        supplier excelled at every component — and nobody would sell them
+        individually.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Why we exist -->
+  <Section tone="block" eyebrow="Why we exist" title="The components we had to build, prebuilt for you">
+    <p class="body-l why__copy">
+      Telematics Stack exists so the next telematics company doesn't start from
+      zero. The components a device needs are prebuilt, production-hardened, and
+      sold individually or as a full package — the option we wished existed.
+    </p>
+  </Section>
+
+  <!-- The team -->
+  <Section eyebrow="The team" title="Telematics people, front to back">
+    <div class="card-grid">
+      <FeatureCard eyebrow="Founder" title="From proof of concept to global scale" spec="Hardware · firmware · backend · apps · compliance">
+        Took a connected-vehicle company from its first prototype to 800,000+
+        devices across three regions as CTO — including OEM security reviews,
+        homologation and privacy compliance.
+      </FeatureCard>
+      <FeatureCard eyebrow="Co-owner" title="Embedded firmware, hands on" spec="Embedded development · years in telematics">
+        The company is co-owned by an embedded firmware developer with years of
+        experience in the telematics business — the hands behind the stack's
+        production hardening.
+      </FeatureCard>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta__inner">
+      <h2 class="display-m">Skip the parts we had to learn the hard way</h2>
+      <p class="body-l cta__copy">
+        Tell us where you are — an idea, a prototype or a fleet in the field — and
+        we'll tell you what you can take off the shelf.
+      </p>
+      <Button href="mailto:contact@telematicsstack.com?subject=About">Talk to us</Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-block: var(--space-9) var(--space-8); }
+  .intro__title { margin-top: var(--space-4); }
+  .intro__lede { margin-top: var(--space-6); max-width: 54ch; color: var(--ink-muted); }
+
+  .stats { padding-block: 0 var(--space-6); }
+
+  .story { display: flex; flex-direction: column; gap: var(--space-4); max-width: 64ch; }
+  .story__muted { color: var(--ink-muted); }
+
+  .why__copy { max-width: 60ch; color: var(--on-block-muted); }
+
+  .cta { padding-block: var(--space-6) 0; }
+  .cta__inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .cta__copy { max-width: 52ch; color: var(--ink-muted); }
+</style>
