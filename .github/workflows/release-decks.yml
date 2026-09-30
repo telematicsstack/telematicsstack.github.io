@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build deck-builder image
         run: docker build -f decks/Dockerfile -t decks-builder .
@@ -32,16 +32,20 @@ jobs:
 
       - name: Upload dist as workflow artifact (for PR review)
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: decks
           path: decks/dist/
 
       - name: Attach decks to release
         if: github.ref_type == 'tag'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            decks/dist/*.pptx
-            decks/dist/*.pdf
-          generate_release_notes: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Upload decks to release $GITHUB_REF_NAME"
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" --clobber decks/dist/*.pptx decks/dist/*.pdf
+          else
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes \
+              decks/dist/*.pptx decks/dist/*.pdf
+          fi
