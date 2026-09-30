@@ -229,11 +229,13 @@ ct = ct.replace(
   "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
   "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
 );
-// 2. Drop slide overrides and files.
-ct = ct.replace(/<Override PartName="\/ppt\/slides\/slide\d+\.xml"[^>]*\/>/g, "");
+// 2. Drop slide AND notes-slide overrides and files. pptxgenjs writes a notes
+//    slide per slide; leaving it behind dangles a rel to the deleted slide,
+//    which makes PowerPoint offer to "repair" the file.
+ct = ct.replace(/<Override PartName="\/ppt\/(slides\/slide|notesSlides\/notesSlide)\d+\.xml"[^>]*\/>/g, "");
 zip.file(CT, ct);
 for (const name of Object.keys(zip.files)) {
-  if (name.startsWith("ppt/slides/")) zip.remove(name);
+  if (name.startsWith("ppt/slides/") || name.startsWith("ppt/notesSlides/")) zip.remove(name);
 }
 // 3. Remove slide references from presentation.xml and its rels.
 const PRES = "ppt/presentation.xml";
@@ -250,6 +252,22 @@ const appFile = zip.file(APP);
 if (appFile) {
   let app = await appFile.async("string");
   app = app.replace(/<Slides>\d+<\/Slides>/, "<Slides>0</Slides>");
+  app = app.replace(/<Notes>\d+<\/Notes>/, "<Notes>0</Notes>");
+  // Drop the "Slide Titles" heading pair and the slide title entries so the
+  // part inventory matches a slideless template.
+  app = app.replace(
+    /<HeadingPairs>[\s\S]*?<\/HeadingPairs>/,
+    "<HeadingPairs><vt:vector size=\"4\" baseType=\"variant\">" +
+      "<vt:variant><vt:lpstr>Fonts Used</vt:lpstr></vt:variant><vt:variant><vt:i4>2</vt:i4></vt:variant>" +
+      "<vt:variant><vt:lpstr>Theme</vt:lpstr></vt:variant><vt:variant><vt:i4>1</vt:i4></vt:variant>" +
+      "</vt:vector></HeadingPairs>",
+  );
+  app = app.replace(
+    /<TitlesOfParts>[\s\S]*?<\/TitlesOfParts>/,
+    "<TitlesOfParts><vt:vector size=\"3\" baseType=\"lpstr\">" +
+      "<vt:lpstr>Arial</vt:lpstr><vt:lpstr>Calibri</vt:lpstr><vt:lpstr>Office Theme</vt:lpstr>" +
+      "</vt:vector></TitlesOfParts>",
+  );
   zip.file(APP, app);
 }
 // 5. Theme colours from the tokens.
