@@ -1,0 +1,127 @@
+# Company overview — aimed at device manufacturers.
+# All copy is taken from the website (src/pages/); no invented figures.
+deck: Telematics Stack — company overview
+slides:
+  - layout: Title
+    eyebrow: Telematics device firmware & components
+    title: Ship in months, not years.
+    subtitle: >-
+      Telematics Stack is supported, production-hardened firmware for telematics
+      devices. Buy the components you need or the full package — both come with
+      support, bug fixes and security fixes, so your team ships product instead
+      of debugging a platform.
+
+  - layout: Stat row
+    title: Everything a telematics device needs
+    stats:
+      - value: "6"
+        label: production components — take one or all
+      - value: "0"
+        label: proprietary tools — open-source toolchain
+      - value: "2010+"
+        label: vehicles covered by the CAN library
+      - value: MCU+
+        label: runs on small MCUs and embedded Linux
+
+  - layout: Section
+    eyebrow: "01"
+    title: The stack
+
+  - layout: Feature cards
+    title: The stack
+    cards:
+      - eyebrow: Platform
+        heading: Hardened firmware platform
+        body: >-
+          Modem connectivity, firmware updates and debug logging are the parts
+          every device needs and every team underestimates. Ours have years of
+          production hardening behind them.
+        spec: Open-source toolchain · builds on Windows, macOS, Linux
+      - eyebrow: Vehicle data
+        heading: CAN stack
+        body: >-
+          Reads most vehicles built after 2010. Built for small MCUs — no heap,
+          no threads, no timers — and just as happy on embedded Linux.
+        spec: ISO-TP (UDS/KWP2000) · raw & broadcast · <30 KB flash · 1 KB RAM
+      - eyebrow: Vehicle data
+        heading: CAN parameter library
+        body: >-
+          A vast collection of CAN parameters, kept current for new vehicles
+          through collaborations with leading diagnostics tool vendors.
+        spec: Cars · light commercial vehicles · trucks
+
+  - layout: Feature cards
+    title: The stack, continued
+    cards:
+      - eyebrow: Safety
+        heading: Driving safety events
+        body: >-
+          Solid IMU calibration that automatically recalibrates to handle drift
+          and works across different IMUs, feeding reliable harsh-driving and
+          safety events.
+        spec: Accelerometer + gyroscope + GNSS speed
+      - eyebrow: Safety
+        heading: AI crash detection
+        body: >-
+          A trained model that classifies crashes on par with market leaders. It
+          is device-agnostic, so it also works with the devices you already have
+          in the field.
+        spec: Device-agnostic · cloud classification
+      - eyebrow: Tracking
+        heading: Clean GNSS tracks
+        body: >-
+          GNSS outliers are removed by cross-checking against IMU data — one
+          generic filter instead of a pile of per-case workarounds.
+        spec: GNSS + IMU cross-checking
+
+  - layout: Section
+    eyebrow: "02"
+    title: Working with us
+
+  - layout: Spec table
+    title: Components or the full package
+    table:
+      - - Individual components
+        - Take the parts you are missing — CAN, safety events, crash detection, GNSS filtering — and keep the rest of your firmware.
+      - - Full package
+        - The complete firmware platform on your device, from modem to CAN, ready for your product on top.
+      - - Both include
+        - support · bug fixes · security fixes
+
+  - layout: Feature cards
+    title: What working together looks like
+    cards:
+      - eyebrow: We do
+        heading: Bring the firmware up on your hardware
+        body: >-
+          We port and test the stack on your device, so it runs before your
+          customer writes a line of application code.
+        spec: Board bring-up · CAN · modem · IMU · GNSS
+      - eyebrow: Your customers get
+        heading: A supported platform
+        body: >-
+          Production-hardened firmware with support behind it, instead of a
+          reference design they have to finish themselves.
+        spec: Support · bug fixes · security fixes
+      - eyebrow: You get
+        heading: A differentiated offering
+        body: >-
+          Your device ships with a proven firmware path. That sets it apart from
+          hardware that arrives as a bare board.
+        spec: Hardware + ready firmware · shorter sales cycle
+
+  - layout: Stat row
+    title: We've shipped this before
+    stats:
+      - value: 800K+
+        label: devices shipped to customers
+      - value: "3"
+        label: regions — EMEA, APAC, LATAM
+      - value: 1M+
+        label: devices since contracted with a major OEM
+      - value: TB
+        label: of vehicle data ingested every month
+
+  - layout: Closing
+    title: Get to market faster.
+    contact: contact@telematicsstack.com

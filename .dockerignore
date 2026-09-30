@@ -3,3 +3,8 @@ dist
 .git
 .github
 .DS_Store
+
+# decks pipeline (derived/installed locally, not needed in image contexts)
+decks/.cache
+decks/dist
+decks/template/node_modules

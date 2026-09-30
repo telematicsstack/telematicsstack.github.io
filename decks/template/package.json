@@ -1,0 +1,12 @@
+{
+  "name": "telematics-stack-deck-template",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.0",
+  "scripts": {
+    "make-template": "bun run make-template.ts"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

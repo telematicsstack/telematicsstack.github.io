@@ -1,0 +1,62 @@
+# Module card — CAN stack. Copy from the website's technology page.
+deck: Telematics Stack — CAN stack module
+slides:
+  - layout: Title
+    eyebrow: Module · CAN stack
+    title: Reads most vehicles, fits almost anywhere
+    subtitle: >-
+      The CAN stack covers most vehicles built after 2010 with ISO-TP
+      diagnostics, raw frames and broadcast traffic. It drops into a small MCU
+      without reshaping your firmware — and runs just as well on embedded Linux.
+
+  - layout: Stat row
+    title: CAN stack
+    stats:
+      - value: "<30 KB"
+        label: flash for the full stack
+      - value: 1 KB
+        label: RAM minimum
+      - value: "0"
+        label: heap, threads or timers
+      - value: "2010+"
+        label: most vehicles built after 2010
+
+  - layout: Spec table
+    title: Protocols and targets
+    table:
+      - - Protocols
+        - ISO-TP (UDS/KWP2000) · raw · broadcast
+      - - Targets
+        - Small MCUs · embedded Linux
+      - - Toolchain
+        - Open source · Windows, macOS, Linux · no proprietary compiler
+      - - In development
+        - VW TP2 · remote CAN scan & diagnostics
+
+  - layout: Feature cards
+    title: The parameters, not just the protocol
+    cards:
+      - eyebrow: Parameter library
+        heading: Vast parameter collection
+        body: >-
+          A stack that speaks CAN is only useful if it knows what to ask for.
+          The library maps the parameters that matter across private cars, vans
+          and trucks.
+        spec: Cars · light commercial vehicles · trucks
+      - eyebrow: Parameter library
+        heading: Kept current
+        body: >-
+          Collaborations with leading diagnostics tool vendors keep the library
+          up to date as new vehicles reach the road.
+        spec: Data collaborations · new models added continuously
+      - eyebrow: In development
+        heading: Remote reverse engineering
+        body: >-
+          When the CAN scan feature is production-ready, remote reverse
+          engineering and diagnostics support in-depth parameters for any
+          vehicle.
+        spec: Remote scan · diagnostics · any vehicle
+
+  - layout: Closing
+    title: Go deeper with our engineers
+    contact: contact@telematicsstack.com

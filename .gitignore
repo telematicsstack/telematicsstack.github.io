@@ -117,3 +117,9 @@ dist
 
 # Astro
 .astro/
+
+# Decks pipeline
+decks/.cache/
+decks/dist/
+decks/.venv/
+__pycache__/

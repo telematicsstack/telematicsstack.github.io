@@ -1,0 +1,47 @@
+name: Release decks
+
+on:
+  push:
+    tags:
+      - "decks-v*"
+  pull_request:
+    paths:
+      - "decks/**"
+      - "design-system/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build deck-builder image
+        run: docker build -f decks/Dockerfile -t decks-builder .
+
+      - name: Build decks
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            DECK_VERSION="${GITHUB_REF_NAME#decks-}"
+          else
+            DECK_VERSION="pr-${GITHUB_SHA::7}"
+          fi
+          docker run --rm -v "$PWD:/work" -w /work/decks -e DECK_VERSION="$DECK_VERSION" decks-builder \
+            bash -c 'uv sync --frozen && uv run prepare.py && for f in content/*.yaml; do uv run build.py "$f"; done'
+
+      - name: Upload dist as workflow artifact (for PR review)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: decks
+          path: decks/dist/
+
+      - name: Attach decks to release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            decks/dist/*.pptx
+            decks/dist/*.pdf
+          generate_release_notes: true
