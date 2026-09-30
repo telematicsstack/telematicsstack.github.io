@@ -222,9 +222,19 @@ def fill_closing(slide, entry, version="dev"):
     set_text(slide, "contact", f"{entry['contact']} · {version}")
 
 
+def drop_starter_slides(prs: Presentation) -> None:
+    """The .potx keeps one blank starter slide (PowerPoint rejects slideless
+    templates); decks are built from the layouts, not from it."""
+    sld_id_lst = prs.slides._sldIdLst
+    for sld_id in list(sld_id_lst):
+        prs.part.drop_rel(sld_id.rId)
+        sld_id_lst.remove(sld_id)
+
+
 def build(content_path: Path, version: str) -> Path:
     spec = yaml.safe_load(content_path.read_text())
     prs = open_potx(TEMPLATE)
+    drop_starter_slides(prs)
     for entry in spec["slides"]:
         layout = find_layout(prs, entry["layout"])
         slide = prs.slides.add_slide(layout)

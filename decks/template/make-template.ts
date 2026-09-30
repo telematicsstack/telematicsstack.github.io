@@ -10,8 +10,9 @@
  * (2x the raster-strict mapping) so the deck reads at projection distance while
  * keeping every ratio of the type scale.
  *
- * Output is written as .pptx by pptxgenjs, then converted to a real .potx by
- * rewriting the main content type in [Content_Types].xml and stripping slides.
+ * Output is written as .pptx by pptxgenjs, then converted to a .potx by
+ * rewriting the main content type in [Content_Types].xml. The starter slide is
+ * kept: PowerPoint repairs templates that contain no slides.
  *
  * The committed .potx is SOURCE once fonts have been embedded in PowerPoint;
  * only rerun this when design-system/ changes, then re-embed the fonts.
@@ -215,62 +216,28 @@ defineMaster("Closing", { color: ground }, [
     { image: { path: logo("lockup-horizontal"), ...lockupPos } },
 ]);
 
-// pptxgenjs needs a slide for a well-formed file; it is stripped below.
+// The template's starter slide: kept in the .potx (a slideless template is
+// rejected by PowerPoint), discarded by build.py when building a deck.
 pptx.addSlide({ masterName: "Title" });
 
 // ------------------------------------------------- write, then make a potx
 const buf = (await pptx.write({ outputType: "nodebuffer" })) as Buffer;
 const zip = await JSZip.loadAsync(buf);
 
-// 1. Main content type: presentation -> template.
+// 1. Main content type: presentation -> template. Nothing else is removed:
+//    the template keeps its one blank Title slide (and its notes slide), because
+//    PowerPoint treats a .potx with zero slides as corrupt and offers to
+//    "repair" it — real PowerPoint-saved templates ship with their slides too.
+//    build.py discards this starter slide before adding content slides.
 const CT = "[Content_Types].xml";
 let ct = await zip.file(CT)!.async("string");
 ct = ct.replace(
   "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
   "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
 );
-// 2. Drop slide AND notes-slide overrides and files. pptxgenjs writes a notes
-//    slide per slide; leaving it behind dangles a rel to the deleted slide,
-//    which makes PowerPoint offer to "repair" the file.
-ct = ct.replace(/<Override PartName="\/ppt\/(slides\/slide|notesSlides\/notesSlide)\d+\.xml"[^>]*\/>/g, "");
 zip.file(CT, ct);
-for (const name of Object.keys(zip.files)) {
-  if (name.startsWith("ppt/slides/") || name.startsWith("ppt/notesSlides/")) zip.remove(name);
-}
-// 3. Remove slide references from presentation.xml and its rels.
-const PRES = "ppt/presentation.xml";
-let pres = await zip.file(PRES)!.async("string");
-pres = pres.replace(/<p:sldIdLst>[\s\S]*?<\/p:sldIdLst>/, "");
-zip.file(PRES, pres);
-const RELS = "ppt/_rels/presentation.xml.rels";
-let rels = await zip.file(RELS)!.async("string");
-rels = rels.replace(/<Relationship[^>]*Target="slides\/slide\d+\.xml"[^>]*\/>/g, "");
-zip.file(RELS, rels);
-// 4. app.xml slide count.
-const APP = "docProps/app.xml";
-const appFile = zip.file(APP);
-if (appFile) {
-  let app = await appFile.async("string");
-  app = app.replace(/<Slides>\d+<\/Slides>/, "<Slides>0</Slides>");
-  app = app.replace(/<Notes>\d+<\/Notes>/, "<Notes>0</Notes>");
-  // Drop the "Slide Titles" heading pair and the slide title entries so the
-  // part inventory matches a slideless template.
-  app = app.replace(
-    /<HeadingPairs>[\s\S]*?<\/HeadingPairs>/,
-    "<HeadingPairs><vt:vector size=\"4\" baseType=\"variant\">" +
-      "<vt:variant><vt:lpstr>Fonts Used</vt:lpstr></vt:variant><vt:variant><vt:i4>2</vt:i4></vt:variant>" +
-      "<vt:variant><vt:lpstr>Theme</vt:lpstr></vt:variant><vt:variant><vt:i4>1</vt:i4></vt:variant>" +
-      "</vt:vector></HeadingPairs>",
-  );
-  app = app.replace(
-    /<TitlesOfParts>[\s\S]*?<\/TitlesOfParts>/,
-    "<TitlesOfParts><vt:vector size=\"3\" baseType=\"lpstr\">" +
-      "<vt:lpstr>Arial</vt:lpstr><vt:lpstr>Calibri</vt:lpstr><vt:lpstr>Office Theme</vt:lpstr>" +
-      "</vt:vector></TitlesOfParts>",
-  );
-  zip.file(APP, app);
-}
-// 5. Theme colours from the tokens.
+
+// 2. Theme colours from the tokens.
 const THEME = "ppt/theme/theme1.xml";
 let theme = await zip.file(THEME)!.async("string");
 const srgb = (v: string) => `<a:srgbClr val="${v}"/>`;
@@ -286,7 +253,7 @@ const clrScheme =
 theme = theme.replace(/<a:clrScheme[\s\S]*?<\/a:clrScheme>/, clrScheme);
 zip.file(THEME, theme);
 
-// 6. Re-apply placeholder names (pptxgenjs writes "Text N") and mark the
+// 3. Re-apply placeholder names (pptxgenjs writes "Text N") and mark the
 //    table placeholder as type "tbl" so python-pptx offers insert_table().
 //    Placeholder <p:sp> elements appear in the XML in definition order.
 for (const fname of Object.keys(zip.files)) {
