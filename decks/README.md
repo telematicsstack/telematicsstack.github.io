@@ -85,15 +85,27 @@ on the website first.
 
 ## The template
 
-`template/telematics-stack.potx` is **committed and is the source template**:
-open it in PowerPoint once, embed the fonts (File → Options → Save → *Embed
-fonts in the file*) and save — python-pptx cannot embed fonts, and without
-embedding, machines without Archivo/Space Mono fall back. All three typefaces
-are SIL OFL licensed, so embedding is permitted.
+`template/telematics-stack.potx` is **committed and is the source template**.
+The generator embeds the brand fonts into it automatically (raw-TTF
+`ppt/fonts/*.fntdata` parts plus a `<p:embeddedFontLst>` — the same format
+PowerPoint on Windows writes), and every deck built from it inherits the
+embedded fonts. All three typefaces are SIL OFL licensed, so embedding is
+permitted. No manual embed step in PowerPoint is needed — or possible:
 
-`template/make-template.ts` only regenerates a *fresh starter* when
-`design-system/` changes (it reads `tokens.json` at runtime — no hex values in
-code). After regenerating you must re-embed the fonts in PowerPoint. Requires
+- **PowerPoint for Mac ignores embedded fonts entirely** (verified on 16.113:
+  it neither renders embedded fonts nor writes any when its own "Embed fonts
+  in the file" option is on). On a Mac, install the fonts instead: copy
+  `decks/.cache/fonts/*.ttf` into `~/Library/Fonts` and **restart PowerPoint**
+  (it only rescans fonts at launch). The name tables of the derived TTFs are
+  normalised by `prepare.py` (the upstream Archivo files misname every weight
+  "Archivo SemiBold"), so install the derived files, not the woff2 sources.
+- Windows PowerPoint and PowerPoint 365 are expected to use the embedded
+  fonts; this has not been verified here (no Windows machine available).
+
+`template/make-template.ts` regenerates the template when `design-system/`
+changes — including the embedded fonts, so a font change is handled by
+regenerating (plus re-copying the TTFs to `~/Library/Fonts` on Macs). It reads
+`tokens.json` at runtime — no hex values in code. Requires
 [Bun](https://bun.sh) (not used by CI or the Dockerfile):
 
 ```sh

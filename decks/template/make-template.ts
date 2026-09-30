@@ -237,7 +237,52 @@ ct = ct.replace(
 );
 zip.file(CT, ct);
 
-// 2. Theme colours from the tokens.
+// 2. Embed the brand fonts, exactly the way PowerPoint's "Embed fonts in the
+//    file" does: raw TTF parts at ppt/fonts/*.fntdata, a font Default in
+//    [Content_Types].xml, relationships from presentation.xml, and a
+//    <p:embeddedFontLst>. All three faces are SIL OFL, so embedding is
+//    permitted. PowerPoint has four style slots per family (regular/bold/
+//    italic/boldItalic); Archivo 500/900 are unused by the template and
+//    cannot be represented, so they are not embedded.
+const EMBED_FONTS: { typeface: string; regular: string; bold?: string }[] = [
+  { typeface: "Archivo Black", regular: "ArchivoBlack-Regular.ttf" },
+  { typeface: "Archivo", regular: "Archivo-400.ttf", bold: "Archivo-700.ttf" },
+  { typeface: "Space Mono", regular: "SpaceMono-Regular.ttf", bold: "SpaceMono-Bold.ttf" },
+];
+{
+  let ct2 = await zip.file(CT)!.async("string");
+  ct2 = ct2.replace("</Types>", '<Default Extension="fntdata" ContentType="application/x-fontdata"/></Types>');
+  zip.file(CT, ct2);
+  let fontRels = "";
+  let fontLst = "";
+  let fontNo = 0;
+  for (const f of EMBED_FONTS) {
+    const styles: [string, string][] = [["regular", f.regular]];
+    if (f.bold) styles.push(["bold", f.bold]);
+    let inner = `<p:font typeface="${f.typeface}"/>`;
+    for (const [style, file] of styles) {
+      fontNo += 1;
+      const rid = `rId${100 + fontNo}`;
+      zip.file(`ppt/fonts/font${fontNo}.fntdata`, readFileSync(join(CACHE, "fonts", file)));
+      fontRels += `<Relationship Id="${rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/font" Target="fonts/font${fontNo}.fntdata"/>`;
+      inner += `<p:${style} r:id="${rid}"/>`;
+    }
+    fontLst += `<p:embeddedFont>${inner}</p:embeddedFont>`;
+  }
+  const PRES = "ppt/presentation.xml";
+  let pres = await zip.file(PRES)!.async("string");
+  // full embed, not subset, so later edits in PowerPoint keep every glyph
+  pres = pres.replace(' saveSubsetFonts="1"', ' embedTrueTypeFonts="1"');
+  // schema order: embeddedFontLst sits between notesSz and defaultTextStyle
+  pres = pres.replace("<p:defaultTextStyle>", `<p:embeddedFontLst>${fontLst}</p:embeddedFontLst><p:defaultTextStyle>`);
+  zip.file(PRES, pres);
+  const RELS = "ppt/_rels/presentation.xml.rels";
+  let rels = await zip.file(RELS)!.async("string");
+  rels = rels.replace("</Relationships>", fontRels + "</Relationships>");
+  zip.file(RELS, rels);
+}
+
+// 3. Theme colours from the tokens.
 const THEME = "ppt/theme/theme1.xml";
 let theme = await zip.file(THEME)!.async("string");
 const srgb = (v: string) => `<a:srgbClr val="${v}"/>`;
@@ -253,7 +298,7 @@ const clrScheme =
 theme = theme.replace(/<a:clrScheme[\s\S]*?<\/a:clrScheme>/, clrScheme);
 zip.file(THEME, theme);
 
-// 3. Re-apply placeholder names (pptxgenjs writes "Text N") and mark the
+// 4. Re-apply placeholder names (pptxgenjs writes "Text N") and mark the
 //    table placeholder as type "tbl" so python-pptx offers insert_table().
 //    Placeholder <p:sp> elements appear in the XML in definition order.
 for (const fname of Object.keys(zip.files)) {

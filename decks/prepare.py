@@ -38,6 +38,38 @@ def render_logos() -> None:
         print(f"  {svg.name} -> {png.relative_to(DECKS)}")
 
 
+# The Archivo weight files are variable-font instances whose name tables all
+# say family "Archivo SemiBold" / subfamily "Regular". Fontconfig copes (it
+# prefers the typographic family), but PowerPoint and Windows match fonts —
+# including fonts embedded in a deck — by the legacy family/subfamily, so the
+# names are normalised here: 400/700 become the Regular/Bold styles of
+# "Archivo", and the unused-in-decks 500/900 get their own family names.
+NAME_FIXES = {
+    "Archivo-400": ("Archivo", "Regular"),
+    "Archivo-500": ("Archivo Medium", "Regular"),
+    "Archivo-700": ("Archivo", "Bold"),
+    "Archivo-900": ("Archivo Heavy", "Regular"),
+}
+
+
+def fix_names(font, family: str, subfamily: str) -> None:
+    name = font["name"]
+    full = family if subfamily == "Regular" else f"{family} {subfamily}"
+    ps = f"{family.replace(' ', '')}-{subfamily}"
+    for name_id in (1, 2, 3, 4, 6, 16, 17):
+        name.removeNames(nameID=name_id)
+    for name_id, value in ((1, family), (2, subfamily), (3, full), (4, full), (6, ps)):
+        name.setName(value, name_id, 3, 1, 0x409)  # Windows, Unicode BMP, en-US
+        name.setName(value, name_id, 1, 0, 0)  # Macintosh, Roman
+    os2, head = font["OS/2"], font["head"]
+    if subfamily == "Bold":
+        os2.fsSelection = (os2.fsSelection & ~0x40) | 0x20
+        head.macStyle |= 0x01
+    else:
+        os2.fsSelection = (os2.fsSelection & ~0x20) | 0x40
+        head.macStyle &= ~0x01
+
+
 def convert_fonts() -> None:
     from fontTools.ttLib import TTFont
 
@@ -49,6 +81,8 @@ def convert_fonts() -> None:
             continue
         font = TTFont(str(woff2))
         font.flavor = None  # strip the woff2 wrapper -> plain sfnt/ttf
+        if woff2.stem in NAME_FIXES:
+            fix_names(font, *NAME_FIXES[woff2.stem])
         font.save(str(ttf))
         print(f"  {woff2.name} -> {ttf.relative_to(DECKS)}")
 
